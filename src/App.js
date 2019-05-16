@@ -22,35 +22,27 @@ class App extends Component {
     } );
   }
 
-  charClickHandler = charIndex => {
-    const input = [...this.state.input]
-    input.splice(charIndex,1)
+  // charClickHandler = charIndex => {
+  //   const input = [...this.state.input]
+  //   input.splice(charIndex,1)
+  // }
+
+  deleteCharHandler = index => {
+    const text = this.state.input;
+    text.splice(index,1)
+    this.setState({input:text});
   }
   
   render() {
-    const style = {
-      display: 'inline-block',
-      padding: '16px',
-      textAlign: 'center',
-      margin: '16px',
-      border: '1px solid black'
-    } 
-
-    let characters = null;
-
-    if (this.state.showChar) {
-      characters = (
-        <div>
-          {this.state.input.map((char, index) =>{
-            return (
-              <Char 
-                click={this.charClickHandler(index)}
-              />
-            )
-          })}
-        </div>
+    const characters = this.state.input.map((char,index) =>{
+      return (
+        <Char 
+          click={ () => this.deleteCharHandler(index)}
+          character={char}
+          key={index}
+        />
       )
-    }
+    })
 
     return (
       <div className="App">
@@ -74,10 +66,6 @@ class App extends Component {
           inputLength={this.state.numberChars}
         />
         {characters}
-        <Char
-          style={style}
-          inputLtr={this.state.input}
-        />
       </div>
     );
   }
